@@ -48,9 +48,10 @@ def run_submenu(folder_name: str, titulo_menu: str):
         except Exception as e:
             print(f"[{folder_name}] Erro ao importar {arquivo}: {e}")
             continue
-
-        tipo_mod = getattr(module, "tipo", None)
-        descricao_mod = getattr(module, "descricao", "")
+        
+        #Nome das variaveis
+        tipo_mod = getattr(module, "NOME_PROGRAMA", None)
+        descricao_mod = getattr(module, "DESC_PROGRAMA", "")
         run_func = getattr(module, "run", None)
 
         if tipo_mod is None or not callable(run_func):

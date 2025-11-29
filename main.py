@@ -47,8 +47,8 @@ def carregar_modulos_principais():
             print(f"Erro ao executar módulo {caminho_main}: {e}")
             continue
 
-        tipo = getattr(module, "tipo", None)
-        descricao = getattr(module, "descricao", "")
+        tipo = getattr(module, "NOME_PROGRAMA", None)
+        descricao = getattr(module, "DESC_PROGRAMA", "")
         run_func = getattr(module, "run", None)
 
         if tipo is None or not callable(run_func):
