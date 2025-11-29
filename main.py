@@ -1,6 +1,7 @@
 import os
 import sys
 import importlib.util
+import submenu_launcher
 
 
 def get_base_dir():
