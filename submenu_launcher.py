@@ -14,7 +14,7 @@ def _get_base_dir():
 def run_submenu(folder_name: str, titulo_menu: str):
     """
     folder_name: nome da subpasta dentro de 'programas' (ex: 'pc', 'dayz')
-    titulo_menu: texto do título do menu (ex: 'MENU PC', 'MENU DAYZ')
+    titulo_menu: texto que aparece no topo do menu (ex: 'MENU PC')
     """
     base_dir = _get_base_dir()
     pasta = os.path.join(base_dir, "programas", folder_name)
@@ -48,14 +48,14 @@ def run_submenu(folder_name: str, titulo_menu: str):
         except Exception as e:
             print(f"[{folder_name}] Erro ao importar {arquivo}: {e}")
             continue
-        
-        #Nome das variaveis
+
+        # ATENÇÃO: nomes padronizados
         tipo_mod = getattr(module, "NOME_PROGRAMA", None)
         descricao_mod = getattr(module, "DESC_PROGRAMA", "")
         run_func = getattr(module, "run", None)
 
         if tipo_mod is None or not callable(run_func):
-            print(f"[{folder_name}] Ignorando '{arquivo}': falta 'tipo' ou 'run()'.")
+            print(f"[{folder_name}] Ignorando '{arquivo}': falta 'NOME_PROGRAMA' ou 'run()'.")
             continue
 
         programas.append({
