@@ -6,22 +6,32 @@ import numpy as np
 
 
 
-
 def parse_oklch(oklch_str, fallback):
     if not oklch_str.strip():
         return np.array(fallback), False
 
     match = re.match(
-        r"oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*/\s*([\d.]+))?\s*\)",
+        r"oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*/\s*([\d.]+%?))?\s*\)",
         oklch_str.strip().lower()
     )
     if not match:
         raise ValueError("Formato inválido. Use: oklch(L C H) ou oklch(L C H / A)")
+
     l = float(match.group(1))
     c = float(match.group(2))
     h = float(match.group(3))
-    a = float(match.group(4)) if match.group(4) else 1.0
-    return np.array([l, c, h, a]), bool(match.group(4))
+
+    a_raw = match.group(4)
+    if a_raw:
+        if a_raw.endswith("%"):
+            a = float(a_raw[:-1]) / 100.0
+        else:
+            a = float(a_raw)
+    else:
+        a = 1.0
+
+    return np.array([l, c, h, a]), bool(a_raw)
+
 
 def calcular_operacoes(lch_base, lch_destino, include_alpha=False):
     ops = []
