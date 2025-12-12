@@ -3,13 +3,14 @@ import time
 import tempfile
 
 
-NOME_PROGRAMA  = "Limpar Arquivos inuteis"
-DESC_PROGRAMA  = "(Pode personalizar)"
+NOME_PROGRAMA = "Limpar Arquivos inuteis"
+DESC_PROGRAMA = "(Pode personalizar)"
 
 # ================= CONFIG =================
 
 USUARIO = os.getenv("USERPROFILE", "")          # Ex: C:\Users\danie
-LOCAL = os.getenv("LOCALAPPDATA", "")           # Ex: C:\Users\danie\AppData\Local
+# Ex: C:\Users\danie\AppData\Local
+LOCAL = os.getenv("LOCALAPPDATA", "")
 PROGRAMDATA = os.getenv("PROGRAMDATA", "")      # Ex: C:\ProgramData
 WINDOWS = os.getenv("WINDIR", "")               # Ex: C:\Windows
 
@@ -34,17 +35,20 @@ PADROES_WINDOWS = [
     os.path.join(PROGRAMDATA, "Package Cache"),
 
     # Recentes (atalhos)
-    os.path.join(USUARIO, "AppData", "Roaming", "Microsoft", "Windows", "Recent"),
+    os.path.join(USUARIO, "AppData", "Roaming",
+                 "Microsoft", "Windows", "Recent"),
 ]
 
 PASTAS_PERSONALIZADA = []
 PASTAS_PERSONALIZADA_NOOBSUPREMO43 = [
     r'C:\Users\danie\OneDrive\Área de Trabalho\Arquivos Temporarios',
-    r'C:\Users\danie\OneDrive\Área de Trabalho\Downloads\Downloads Default'
+    r'C:\Users\danie\OneDrive\Área de Trabalho\Downloads\Downloads Default',
+    r'C:\temporario'
+    r'C:\Users\danie\Videos\NVIDIA'
 ]
 
 pastas_para_deletar = []
-limite_dias_escolhido = 5  # valor padrão, será sobrescrito
+limite_dias_escolhido = 7  # valor padrão, será sobrescrito
 
 
 # =============== TRATAMENTO DE DADOS (AGORA EM FUNÇÃO) ===============
@@ -57,16 +61,18 @@ def configurar_limpeza_interativa():
 
     while True:
         if (not dias_personalizados.isdigit()):
-            dias_personalizados = input("Define quantos dias (em número) até apagar os arquivos. Exemplo: escolhendo 7, some tudo com mais de 7 dias: ")
+            dias_personalizados = input(
+                "Define quantos dias (em número) até apagar os arquivos. Exemplo: escolhendo 7, some tudo com mais de 7 dias: ")
 
         if ((not dias_personalizados.isdigit())):
             print("Valor inválido, digite apenas números.\n")
             continue
 
-        if  (pastas_personzalidas ):
+        if (pastas_personzalidas):
             print('Caso não queira mais pastas digite "sair"')
-        
-        pastas_personzalidas = input("Escolha um caminho personalizado de qual pasta deseja apagar: ")
+
+        pastas_personzalidas = input(
+            "Escolha um caminho personalizado de qual pasta deseja apagar: ")
 
         if (pastas_personzalidas.lower() == "sair"):
             pastas_para_deletar = PADROES_WINDOWS + PASTAS_PERSONALIZADA
@@ -118,7 +124,8 @@ def limpar_pasta(base: str, limite_dias: int):
 
             except PermissionError:
                 # Pasta em uso → ignora
-                print(f"Pulado (pasta em uso ou sem permissão): {caminho_pasta}")
+                print(
+                    f"Pulado (pasta em uso ou sem permissão): {caminho_pasta}")
 
             except FileNotFoundError:
                 pass
