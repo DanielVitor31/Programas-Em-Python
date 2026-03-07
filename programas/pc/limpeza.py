@@ -43,7 +43,6 @@ PASTAS_PERSONALIZADA = []
 PASTAS_PERSONALIZADA_NOOBSUPREMO43 = [
     r'C:\Users\danie\OneDrive\Área de Trabalho\Arquivos Temporarios',
     r'C:\Users\danie\OneDrive\Área de Trabalho\Downloads\Downloads Default',
-    r'C:\temporario'
     r'C:\Users\danie\Videos\NVIDIA'
 ]
 
